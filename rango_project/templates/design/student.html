@@ -1,0 +1,52 @@
+<!DOCTYPE html {% load static %}>
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Student</title>
+    </head>
+    <body>
+            <a href="/createpost/">Create_Post</a><br/>
+            <a href="/index/">Index</a>
+    <centre><h1>Student Form..</h1></centre>
+    
+    <form method="POST" action="/student/">
+        {% csrf_token %}
+
+        <table>
+            <tr>
+                <td>Enrollement no: </td>
+                <td><input type="text" name="erno"> </td>
+            </tr>
+            <tr>
+                <td>Name: </td>
+                <td><input type="text" name="name"> </td>
+            </tr>
+            <tr>
+                <td>City: </td>
+                <td><input type="text" name="city"> </td>
+            </tr>
+            <tr>
+                <td>DOB: </td>
+                <td><input type="text" name="dob"> </td>
+            </tr>
+            <tr>
+                <td>Email: </td>
+                <td><input type="email" name="email"> </td>
+            </tr>
+            <tr>
+                <td>Phone: </td>
+                <td><input type="text" name="phone"> </td>
+            </tr>
+            <tr>
+                    <td colspan="2"><input type="submit" value="Add" name="Add"> </td>
+            </tr>
+        </table>
+    </form>
+    {% for student_display in ans_detail %}
+    <p>{{ student_display.name }}</p>
+    {% endfor %}
+</body>
+</html>
+
+
+

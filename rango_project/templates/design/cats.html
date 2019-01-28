@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title></title>
+    </head>
+<style>
+
+</style>
+<body>
+   
+    
+    <div>
+            {% for c in cats %}
+                {% if c == act_cat %}
+                    {{ act_cat }}
+                {% endif %}
+                {% if c == act_cat %}
+               
+                    <li class="nav-item"><a class="nav-link" href="{% url 'show_cateory' c.slug %}">{{ c.name }}</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'show_category' c.slug %}">{{ c.name }}</a></li>
+                {% endif %}
+           
+            {% endfor %}
+    </div>
+   
+</body>
+
+</html>

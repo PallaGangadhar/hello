@@ -1,0 +1,49 @@
+{% extends 'design/base.html' %}
+
+{% load staticfiles %}
+{% load deisgn_template_tags %}
+
+    {% block body_block %}
+   
+    <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+        <div class="jumbotron">
+            <h1 class="display-3">Rango says...</h1> {% if user.is_authenticated %}
+            <h1>hey there {{ user.username }}!</h1> {% else %}
+            <h1>hey there partner! </h1> {% endif %}
+        </div>
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <h4>Most Liked Categories</h4>
+                <p>
+                    {% if categories %}
+                    <ul>
+                        {% for category in categories %}
+                        <li><a href="{% url 'show_category' category.slug %}">
+                                {{ category.name }}</a>
+                                <button type="button" class="btn btn-primary rounded-circle btn-sm">{{ category.likes }}</button> 
+                            </li> {% endfor %}
+                    </ul>
+                    {% else %}
+                    <strong>There are no categories present.</strong> {% endif %}
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <h4>Most Viewed Pages</h4>
+                <p>
+                    {% if pages %}
+                    <ul>
+                        {% for page in pages %}
+                        <li><a href="{{ page.url }}">{{ page.title }}</a>
+                            <button type="button" class="btn btn-primary rounded-circle btn-sm">{{ page.views }}</button> 
+                        </li> 
+                            <!-- <li><a href="{% url 'goto' %}?p_id={{ page.id }}">{{ page.title }}</a></li> -->
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <strong>There are no categories present.</strong>
+                    {% endif %} </p>
+            </div>
+        </div>
+        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" style="margin-left:12%;margin-top:5%;height:250px;width:600px;"/>
+    </main>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'design/base.html' %}
+{% load staticfiles %}
+    {% block title_block %}
+        {{ category.name }}
+    {% endblock %}
+
+
+    {% block body_block %}
+    <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+        <div id="#pages">
+        {% if pages %}
+            <ul>
+                {% for page in pages %}
+                <li><a href="{% url 'goto' %}?page_id={{page.id}}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <strong>No pages currently in category.</strong>
+        {% endif %}
+    </div>
+    </main>
+    {% endblock %}

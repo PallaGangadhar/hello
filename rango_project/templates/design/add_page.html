@@ -1,0 +1,27 @@
+{% extends 'design/base.html' %}
+
+{% block body_block %}
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+    <div>
+            <h2 class="form-signin-heading" style="margin-left:2%;margin-top:3%;">Add Page..</h2>
+        <form role="role" id="page_form" method="post" action="{% url 'add_page' category.slug %}" style="margin-left:2%;margin-top:3%;">
+            {% csrf_token %}    
+
+           {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for fields in form.visible_fields %}
+            <br/>
+                
+                {{ fields.help_text }}
+                {{ fields }}
+                {{ fields.errors }}<br/>
+            {% endfor %}
+
+            <!-- <h1>Enter Title: </h1>{{ form.title }} -->
+            <button type="submit" class="btn btn-primary" name="submit">Add</button>
+        </form> 
+    </div>
+</main>
+{% endblock %}

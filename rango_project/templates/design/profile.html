@@ -1,0 +1,25 @@
+{% extends 'design/base.html' %}
+{% block body_block %}
+    <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+            <h2 class="form-signin-heading" style="margin-left:2%;margin-top:3%;">{{ selecteduser.username }}  Profile</h2>
+            {% if userprofile.picture %}
+                <img src="{{ MEDIA_URL }}/{{ userprofile.picture }}" width="300" height="300" alt="{{ selecteduser.username }}"/>
+            {% else %}
+                <img src="http://lorempixel.com/64/64/people/" width="300" height="300" alt="{{ selecteduser.username }}"/>
+            {% endif %}
+                <br/>
+            <div>
+                {% if selecteduser.username == user.username %}
+                    <form method="POST" action="." enctype="multipart/form-data">
+                        {% csrf_token %}<br/>
+                        {{ form.as_p }}
+                        <input type="submit" value="Update" />
+                    </form>
+                {% else %}
+                <br/>
+                <p><strong><a href="{{ userprofile.website }}">{{ userprofile.website }}</a></strong></p>
+                {% endif %}
+            </div>
+            <div id="edit_profile"></div>
+    </main>
+{% endblock %}

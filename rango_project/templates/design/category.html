@@ -1,0 +1,133 @@
+{% extends 'design/base.html' %}
+{% load staticfiles %}
+    {% block title_block %}
+        {{ category.name }}
+    {% endblock %}
+
+
+    {% block body_block %}
+    <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+        {% if category %}
+        <div style="margin-top:3%;" class="container-fluid">
+            <div class="row">
+                <div>
+                    <h1>{{ category.name }} </h1>
+                </div>
+               
+                <div>
+                    <strong id="like_count">{{ category.likes }}</strong>
+                    {% if user.is_authenticated %}
+                        <button id="likes" data-catid="{{ category.id }}" class="btn btn-primary btn-sm" type="button">
+                            Likes
+                        </button>
+                    {% endif %}
+                </div>
+                <div>
+                    <h4>({{ category.views }} views)</h4>
+                </div>
+            </div>
+        </div>
+        <div class="margin-top:3%;" id="pages">
+            {% if pages %} 
+            <ul>
+                 {% for page in pages %}
+                    <li>
+                        
+                        <a href="{% url 'goto' %}?p_id={{ page.id }}">{{ page.title }}</a>
+                        {% if page.views > 1 %}
+                            ({{ page.views }} views)
+                        {% elif page.views == 1 %}
+                            ({{ page.views }} view)
+                        {% endif %}
+                      
+                    </li>
+                    
+             {% endfor %}
+
+            </ul> 
+            {% else %}
+                <strong>No pages currently in category.</strong> 
+            {% endif %}
+        </div>
+       
+            {% if user.is_authenticated %}
+                <a href="{% url 'add_page' category.slug %}">Add a Page</a>
+                <a href="{% url 'edit_category' category.slug %}">Edit Catgeory</a> 
+            {% endif %}
+        {% else %}
+        The specified category does not exist!
+        {% endif %}
+    </div>
+
+
+    <!-- Search form -->
+    <div>
+        <h1 style="margin-left:5%;margin-top:5%;">Search with Rango</h1>
+        <br/>
+        <form class="form-inline" id="user_form" method="post" action="{% url 'show_category' category.slug %}" style="margin-left:5%;">
+            {% csrf_token %}
+           
+            <div class="form-group">
+                <input class="form-control" type="text" size="50" name="query" value="{{ query }}" id="query"/>
+            </div>
+          
+            <button class="btn btn-primary" type="submit" name="submit" value="Search">Search</button>
+        </form>
+        <div>
+            {% if result_list %}
+                <h3 style="margin-left:5%;">Results</h3>
+                <div class="list-group" style="margin-left:5%;">
+                    {% for result in result_list %}
+                        <div class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                <a href="{{ result.link }}">{{ result.title }}</a>
+                            </h4>
+                            <p class="list-group-item-text">{{ result.summary }}</p>
+                            {% if user.is_authenticated %}
+                                <button data-catid="{{ category.id }}" data-title="{{ result.title  }}" data-url="{{ result.link }}" 
+                                class="rango-add btn-info btn-sm" type="button">Add</button>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+</main>
+     {% endblock %} 
+
+<!-- 
+
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+<body>
+       
+    <div>
+        {% if category %}
+            <h1>{{ category.name }}</h1>
+            {% if pages %}
+                <ul>
+                    {% for page in pages %}
+                    <li><a href="{{ page.url }}">{{ page.title }}
+                    </a></li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    <strong>Sorry No page found</strong>
+                {% endif %}
+            {% else %}
+                <strong>Does not category</strong>
+            {% endif %}
+    </div>
+
+    <a href="/hello_world/{{ category.slug }}/add_page/">Add Page</a>
+</body>
+</html>
+ -->

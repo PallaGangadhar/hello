@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Create a Post </title>
+</head>
+
+<body>
+<a href="/index/">Index</a>
+<a href="/student/">Student</a>
+<h1>Create a Post </h1>
+<form action="/createpost/" method="POST">
+        {% csrf_token %}
+Title: <input type="text" name="title"/><br/>
+
+
+<input type="submit" value="Post"/>
+</form>
+</body>
+
+</html>
